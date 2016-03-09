@@ -165,6 +165,11 @@ void delete_x(node *&H, int x)
 		}
 
 	}
+	else
+	{
+		cout << "Nie ma takiego x'a" << endl;
+		system("PAUSE");
+	}
 }
 void swap_x(node *&H, int x)
 {
