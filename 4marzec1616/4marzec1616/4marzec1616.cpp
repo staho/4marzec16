@@ -16,7 +16,7 @@ void display(node *);
 void clean(node *&);
 int delete_last(node *&);
 void bubble(node *&);
-void delete_x(node *&);
+void delete_x(node *&, int);
 void swap_x(node *&, int);
 
 int main()
@@ -28,7 +28,8 @@ int main()
 		system("CLS");
 		cout << "Co chcesz zrobic z lista" << endl
 			<< "1. Dodac element?\t\t\t" << "2. Skasowac element <ostatni z listy>" << endl
-			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5. Bubblesort\t\t6.Wyjsc" << endl;
+			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5. Bubblesort\t\t\t6. Usunac x" << endl
+			<< "7. Zamienic x\t\t\t8. Usunac" << endl;
 		cin >> choice;
 		switch (choice)
 		{
@@ -54,6 +55,23 @@ int main()
 			break;
 		case 5:
 			bubble(H);
+			break;
+		case 6:
+			{
+				int x;
+				cout << "Podaj x" << endl;
+				cin >> x;
+				delete_x(H, x);
+			}
+			break;
+		case 7:
+			{
+				int x;
+				cout << "Podaj x" << endl;
+				cin >> x;
+				swap_x(H, x);
+			}
+		break;
 		default:
 			break;
 		}
@@ -124,11 +142,59 @@ void bubble(node *&)
 {
 
 }
-void delete_x(node *&)
+void delete_x(node *&H, int x)
 {
+	if (H != NULL)
+	{
+		node *p = H;
+		if (p->val == x)
+		{
+			H = p->next;
+			delete p;
+		}
+		else
+		{
+			while (p->next != NULL && p->next->val != x)
+				p = p->next;
+			if (p->next != NULL)
+			{
+				node *d = p->next;
+				p->next = d->next;
+				delete d;
+			}
+		}
 
+	}
 }
 void swap_x(node *&H, int x)
 {
-
+	if (H != NULL && H->next != NULL)
+	{
+		if (H->val = x)
+		{
+			node * p = H->next;
+			H = H->next;
+			p->next = H->next;
+			H->next = p;
+		}
+		else
+		{
+			node * p = H;
+			while (p->next != NULL && p->next->val != x)
+				p = p->next;
+			if (p->next != NULL && p->next->next != NULL)
+			{
+				node * d = p->next;
+				p->next = d->next;
+				d->next = d->next->next;
+				p->next = d->next->next;
+				p->next->next = d;
+			}
+		}
+	}
+	else
+	{
+		cout << "Nie ma x'a" << endl;
+		system("PAUSE");
+	}
 }
