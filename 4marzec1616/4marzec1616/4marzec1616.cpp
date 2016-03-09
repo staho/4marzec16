@@ -15,17 +15,20 @@ void add(node *&, int &);
 void display(node *);
 void clean(node *&);
 int delete_last(node *&);
+void bubble(node *&);
+void delete_x(node *&);
+void swap_x(node *&, int);
 
 int main()
 {
 	node * H = NULL;	//definicja + deklaracja Heada
 	int choice = 0, counter = 0;
-	while (choice != 5)
+	while (choice != 6)
 	{
 		system("CLS");
 		cout << "Co chcesz zrobic z lista" << endl
 			<< "1. Dodac element?\t\t\t" << "2. Skasowac element <ostatni z listy>" << endl
-			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5.Wyjsc" << endl;
+			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5. Bubblesort\t\t6.Wyjsc" << endl;
 		cin >> choice;
 		switch (choice)
 		{
@@ -49,7 +52,8 @@ int main()
 		case 4:
 			delete_last(H);
 			break;
-
+		case 5:
+			bubble(H);
 		default:
 			break;
 		}
@@ -114,4 +118,17 @@ int delete_last(node *&H)
 		p->next = NULL;
 		return x;
 	}
+}
+//commity
+void bubble(node *&)
+{
+
+}
+void delete_x(node *&)
+{
+
+}
+void swap_x(node *&H, int x)
+{
+
 }
