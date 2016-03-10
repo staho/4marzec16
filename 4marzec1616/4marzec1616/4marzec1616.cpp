@@ -14,22 +14,22 @@ struct node { // struktura listy
 void add(node *&, int &);
 void display(node *);
 void clean(node *&);
-int delete_last(node *&);
-void bubble(node *&);
-void delete_x(node *&, int);
+int delete_last(node *&, int &);
+void bubble(node *&, int);
+void delete_x(node *&, int , int &);
 void swap_x(node *&, int);
 
 int main()
 {
 	node * H = NULL;	//definicja + deklaracja Heada
 	int choice = 0, counter = 0;
-	while (choice != 6)
+	while (choice != 10)
 	{
 		system("CLS");
 		cout << "Co chcesz zrobic z lista" << endl
 			<< "1. Dodac element?\t\t\t" << "2. Skasowac element <ostatni z listy>" << endl
-			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5. Bubblesort\t\t\t6. Usunac x" << endl
-			<< "7. Zamienic x\t\t\t8. Usunac" << endl;
+			<< "3. Wyswietlic pelna liste\t\t4. Posprzatac" << endl << "5. Bubblesort\t\t\t\t6. Usunac x" << endl
+			<< "7. Zamienic x\t\t\t\t10. Wyjsc" << endl;
 		cin >> choice;
 		switch (choice)
 		{
@@ -39,7 +39,7 @@ int main()
 		case 2:
 			try
 			{
-				cout << "Sciagniety element to " << delete_last(H) << endl;
+				cout << "Sciagniety element to " << delete_last(H, counter) << endl;
 			}
 			catch (int)
 			{
@@ -51,17 +51,18 @@ int main()
 			display(H);
 			break;
 		case 4:
-			delete_last(H);
+			clean(H);
+			counter = 0;
 			break;
 		case 5:
-			bubble(H);
+			bubble(H, counter);
 			break;
 		case 6:
 			{
 				int x;
 				cout << "Podaj x" << endl;
 				cin >> x;
-				delete_x(H, x);
+				delete_x(H, x, counter);
 			}
 			break;
 		case 7:
@@ -73,6 +74,7 @@ int main()
 			}
 		break;
 		default:
+
 			break;
 		}
 
@@ -114,7 +116,7 @@ void clean(node *&H)
 		delete p;
 	}
 }
-int delete_last(node *&H)
+int delete_last(node *&H, int &counter)
 {
 	node * p = H;
 	int x;
@@ -125,6 +127,7 @@ int delete_last(node *&H)
 		p = H;
 		H = NULL;
 		delete p;
+		counter--;
 		return x;
 	}
 	else
@@ -134,15 +137,40 @@ int delete_last(node *&H)
 		x = p->next->val;
 		delete p->next;
 		p->next = NULL;
+		counter--;
 		return x;
 	}
 }
 //commity
-void bubble(node *&)
+void bubble(node *&H, int n)
 {
-
+	for (int j = 0; j < n; j++)
+	{
+		node *d = H;
+		for (int i = 0; i < n - 2; i++)
+		{
+			if (H->val > H->next->val)
+			{
+				node * p = H;
+				H = H->next;
+				p->next = H->next;
+				H->next = p;
+			}
+			else if (d->next->next != NULL)
+			{
+				if (d->next->val > d->next->next->val)
+				{
+					node * p = d->next;
+					d->next = p->next;
+					p->next = p->next->next;
+					d->next->next = p;
+				}
+			}
+		d = d->next;
+		}
+	}
 }
-void delete_x(node *&H, int x)
+void delete_x(node *&H, int x, int &counter)
 {
 	if (H != NULL)
 	{
@@ -164,6 +192,7 @@ void delete_x(node *&H, int x)
 			}
 		}
 
+		counter--;
 	}
 	else
 	{
@@ -175,9 +204,9 @@ void swap_x(node *&H, int x)
 {
 	if (H != NULL && H->next != NULL)
 	{
-		if (H->val = x)
+		if (H->val == x)
 		{
-			node * p = H->next;
+			node * p = H;
 			H = H->next;
 			p->next = H->next;
 			H->next = p;
@@ -192,7 +221,6 @@ void swap_x(node *&H, int x)
 				node * d = p->next;
 				p->next = d->next;
 				d->next = d->next->next;
-				p->next = d->next->next;
 				p->next->next = d;
 			}
 		}
