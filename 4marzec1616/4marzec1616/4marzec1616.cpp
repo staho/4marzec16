@@ -18,6 +18,7 @@ int delete_last(node *&, int &);
 void bubble(node *&, int);
 void delete_x(node *&, int , int &);
 void swap_x(node *&, int);
+void swap_x_y(node *&, int, int);
 
 int main()
 {
@@ -229,5 +230,32 @@ void swap_x(node *&H, int x)
 	{
 		cout << "Nie ma x'a" << endl;
 		system("PAUSE");
+	}
+}
+void swap_x_y(node *&H, int x, int y)
+{
+	if (H != NULL && H->next != NULL)
+	{
+		node *p = H;
+		//tutaj jeszcze jeœli element pierwszy jest równy x
+
+		while (p->next->next != NULL || p->next->val != x)
+			p = p->next;
+		if (p->next->val == x)
+		{
+			node *d = H;
+			while (d->next->next != NULL || d->next->val != y)
+				d = d->next;
+			if (d->next->val == y)
+			{
+
+			}
+		}
+		else 
+
+	}
+	else
+	{
+		cout << "Kolejka ma < 2 elementy" << endl;
 	}
 }
